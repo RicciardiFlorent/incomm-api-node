@@ -15,6 +15,7 @@ const Offer = function(offer) {
     this.start_date= offer.start_date;
     this.end_date= offer.end_date;
     this.offer_sector_id= offer.offer_sector_id;
+    this.company_id = offer.company_id;
   };
   Offer.create = (newOffer, result) => {
     console.log(newOffer)
@@ -62,12 +63,23 @@ const Offer = function(offer) {
       result(null, res);
     });
   };
+
+  Offer.getNbOffers = result => {
+    sql.query("SELECT company_id, count(offer_id) as nbOffers from offers group by company_id", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      result(null, res);
+    });
+  }
   
   
   Offer.updateById = (id, offer, result) => {
     sql.query(
       "UPDATE offers SET contract_id = ?, employee_id = ?, posted_at = ?, content = ?, title = ?, fast_apply = ?, url = ?, salary = ?, city = ?, department = ?, start_date=?, end_date = ?, offer_sector_id = ? WHERE offer_id = ?",
-      [  offer.employee_id,offer.posted_at,offer.content,offer.title,offer.fast_apply,offer.url,offer.salary,offer.city,offer.department,offer.start_date,offer.end_date,offer.offer_sector_id, id],
+      [  offer.employee_id,offer.posted_at,offer.content,offer.title,offer.fast_apply,offer.url,offer.salary,offer.city,offer.department,offer.start_date,offer.end_date,offer.offer_sector_id,offer.company_id, id],
       (err, res) => {
         if (err) {
           console.log("error: ", err);

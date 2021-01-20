@@ -18,4 +18,6 @@ module.exports = app => {
   
     // Create a new Offer
     app.delete("/offer", offer.deleteAll);
+
+    app.get("/nbOffers", offer.getNbOffers)
   };

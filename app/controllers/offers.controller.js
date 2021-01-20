@@ -24,6 +24,7 @@ exports.create = (req, res) => {
       start_date: req.body.start_date,
       end_date: req.body.end_date,
       offer_sector_id: req.body.offer_sector_id,
+      company_id: req.body.company_id
     });
   
     // Save Offer in the database
@@ -48,6 +49,17 @@ exports.findAll = (req, res) => {
       else res.send(data);
     });
   };
+
+  exports.getNbOffers = (req, res) => {
+    Offer.getNbOffers((err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving offers."
+        });
+      else res.send(data);
+    });
+  }
 
 // Find a single Offer with a offerId
 exports.findOne = (req, res) => {
