@@ -45,6 +45,24 @@ const Companie = function(companie) {
     });
   };
   
+  Companie.findByName = (companyName, result) => {
+    sql.query(`SELECT * FROM companies WHERE name = "${companyName}"`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      if (res.length) {
+        console.log("found companie: ", res[0]);
+        result(null, res[0]);
+        return;
+      }
+  
+      // not found Companie with the name
+      result({ kind: "not_found" }, null);
+    });
+  };
   
   Companie.getAll = result => {
     sql.query("SELECT * FROM companies", (err, res) => {

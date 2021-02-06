@@ -8,13 +8,16 @@ module.exports = app => {
     app.get("/company", company.findAll);
   
     // Retrieve a single Companie with companyId
-    app.get("/company/:companyId", company.findOne);
+    app.get("/company/:companieId", company.findOne);
+
+    // Retrieve a company with the name
+    app.get("/company/name/:companieName", company.findOneByName)
   
     // Update a Companie with companyId
-    app.put("/company/:companyId", company.update);
+    app.put("/company/:companieId", company.update);
   
     // Delete a Companie with companyId
-    app.delete("/company/:companyId", company.delete);
+    app.delete("/company/:companieId", company.delete);
   
     // Create a new Companie
     app.delete("/company", company.deleteAll);
