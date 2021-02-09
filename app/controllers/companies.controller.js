@@ -61,7 +61,7 @@ exports.findOne = (req, res) => {
     });
   };
 
-  // Find a single Companie with a companieId
+  // Find a single Companie with a companyName
 exports.findOneByName = (req, res) => {
     Companie.findByName(req.params.companieName, (err, data) => {
       if (err) {

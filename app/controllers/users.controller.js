@@ -30,6 +30,27 @@ exports.create = (req, res) => {
     });
   };
 
+// login user
+exports.login = (req, res) => {
+  console.log(req.body)
+  // Validate request
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+
+  User.checkCredential(req.body.email, req.body.password, (err,data) => {
+    if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error with the credentials"
+        });
+      else res.send(data);
+  });
+};
+
+
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
     User.getAll((err, data) => {
@@ -59,17 +80,17 @@ exports.findOne = (req, res) => {
     });
   };
 
-  // Find a single User with a userId
-exports.findOneByName = (req, res) => {
-    User.findByName(req.params.userName, (err, data) => {
+  // Find a single User with an email
+exports.findOneByEmail = (req, res) => {
+    User.findByEmail(req.params.userEmail, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found User with name ${req.params.userName}.`
+            message: `Not found User with email ${req.params.userEmail}.`
           });
         } else {
           res.status(500).send({
-            message: "Error retrieving User with name " + req.params.userName
+            message: "Error retrieving User with email " + req.params.userEmail
           });
         }
       } else res.send(data);
