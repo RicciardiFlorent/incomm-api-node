@@ -30,6 +30,27 @@ exports.create = (req, res) => {
     });
   };
 
+// login user
+exports.login = (req, res) => {
+  console.log(req.body)
+  // Validate request
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+
+  User.checkCredential(req.body.email, req.body.password, (err,data) => {
+    if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error with the credentials"
+        });
+      else res.send(data);
+  });
+};
+
+
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
     User.getAll((err, data) => {

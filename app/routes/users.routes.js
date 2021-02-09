@@ -21,4 +21,6 @@ module.exports = app => {
   
     // Create a new User
     app.delete("/user", user.deleteAll);
+
+    app.post("/login", user.login)
   };
