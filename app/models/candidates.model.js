@@ -26,7 +26,7 @@ const Candidate = function(candidate) {
   };
   
   Candidate.findById = (candidateId, result) => {
-    sql.query(`SELECT * FROM candidates WHERE candidate_id = ${candidateId}`, (err, res) => {
+    sql.query(`SELECT * FROM users INNER JOIN candidates ON users.user_id = candidates.user_id AND candidate_id = ${candidateId}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -46,7 +46,7 @@ const Candidate = function(candidate) {
   
   
   Candidate.getAll = result => {
-    sql.query("SELECT * FROM candidates", (err, res) => {
+    sql.query("SELECT * FROM users INNER JOIN candidates ON users.user_id = candidates.user_id", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
