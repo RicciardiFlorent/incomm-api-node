@@ -21,4 +21,7 @@ module.exports = app => {
   
     // Create a new Companie
     app.delete("/company", company.deleteAll);
+
+    app.post("/company/:companieId/img", company.updateImage);
+
   };

@@ -78,6 +78,34 @@ exports.findOneByName = (req, res) => {
     });
   };
 
+  // Update a Companie identified by the companieId in the request
+exports.updateImage = (req, res) => {
+  // Validate Request
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+
+  Companie.insertImage(
+    req.body.image, req.params.companieId,
+   
+    (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            message: `Not found Companie with id ${req.params.companieId}.`
+          });
+        } else {
+          res.status(500).send({
+            message: "Error updating Companie with id " + req.params.companieId
+          });
+        }
+      } else res.send(data);
+    }
+  );
+};
+
 
 // Update a Companie identified by the companieId in the request
 exports.update = (req, res) => {

@@ -25,6 +25,19 @@ const Companie = function(companie) {
       result(null, { id: res.insertId, ...newCompanie });
     });
   };
+
+  Companie.insertImage = (image, id, result) => {
+    sql.query(`UPDATE companies SET image = "${image}" WHERE company_id = ${id} `, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      console.log("updated company: ", { company_id: id });
+      result(null, { company_id: id  });
+    });
+  }
   
   Companie.findById = (companieId, result) => {
     sql.query(`SELECT * FROM companies WHERE company_id = ${companieId}`, (err, res) => {
