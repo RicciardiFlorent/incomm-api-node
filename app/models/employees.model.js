@@ -22,7 +22,7 @@ const Employee = function(employee) {
   };
   
   Employee.findById = (employeeId, result) => {
-    sql.query(`SELECT * FROM users INNER JOIN employees ON users.user_id = employees.user_id AND employee_id = ${employeeId} `, (err, res) => {
+    sql.query(`SELECT * FROM users INNER JOIN employees ON users.user_id = employees.user_id AND users.user_id = ${employeeId} `, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
