@@ -57,6 +57,26 @@ const Companie = function(companie) {
       result({ kind: "not_found" }, null);
     });
   };
+
+  Companie.getImageByID = (id, result) =>{
+    sql.query(`SELECT image FROM companies WHERE company_id = "${id}"`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      if (res.length) {
+        let resul = res[0].toString('utf-8')
+        console.log("found companie: ", resul);
+        result(null, resul);
+        return;
+      }
+
+      // not found Companie with the name
+      result({ kind: "not_found" }, null);
+    });
+  }
   
   Companie.findByName = (companyName, result) => {
     sql.query(`SELECT * FROM companies WHERE name = "${companyName}"`, (err, res) => {

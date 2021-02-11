@@ -78,6 +78,23 @@ exports.findOneByName = (req, res) => {
     });
   };
 
+  // Find a single Companie with a companyName
+  exports.getImageByID = (req, res) => {
+    Companie.getImageByID(req.params.companieId, (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            message: `Not found Companie with id ${req.params.companieId}.`
+          });
+        } else {
+          res.status(500).send({
+            message: "Error retrieving Companie with id " + req.params.companieId
+          });
+        }
+      } else res.send(data);
+    });
+  };
+
   // Update a Companie identified by the companieId in the request
 exports.updateImage = (req, res) => {
   // Validate Request
@@ -89,7 +106,6 @@ exports.updateImage = (req, res) => {
 
   Companie.insertImage(
     req.body.image, req.params.companieId,
-   
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {

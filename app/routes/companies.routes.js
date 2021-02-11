@@ -24,4 +24,6 @@ module.exports = app => {
 
     app.post("/company/:companieId/img", company.updateImage);
 
+    app.get("/company/:companieId/img", company.getImageByID)
+
   };
