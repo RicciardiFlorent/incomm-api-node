@@ -64,9 +64,7 @@ exports.findAllByPostId = (req, res) => {
     Comment.findByPostId(req.params.post_id, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
-          res.status(404).send({
-            message: `Not found Comment with id ${req.params.post_id}.`
-          });
+          res.send(null);
         } else {
           res.status(500).send({
             message: "Error retrieving Comment with id " + req.params.post_id
