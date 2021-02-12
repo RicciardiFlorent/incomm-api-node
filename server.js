@@ -5,8 +5,7 @@ const app = express()
 const cors = require("cors"); 
 app.use(cors());
 // parse requests of content-type: application/json
-app.use(bodyParser.json());
-
+app.use( bodyParser.json( { limit: '50MB' } ) );
 // parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -29,6 +28,7 @@ require("./app/routes/companies.routes.js")(app);
 require("./app/routes/users.routes.js")(app);
 require("./app/routes/candidates.routes.js")(app);
 require("./app/routes/employees.routes.js")(app);
+require("./app/routes/comments.routes.js")(app);
 
 //set port, listen for requests
 app.listen(3000, () => {
