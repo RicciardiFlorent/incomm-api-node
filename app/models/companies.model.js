@@ -67,9 +67,8 @@ const Companie = function(companie) {
       }
   
       if (res.length) {
-        let resul = res[0].toString('utf-8')
-        console.log("found companie: ", resul);
-        result(null, resul);
+        console.log("found companie: ", res[0]);
+        result(null, res[0]);
         return;
       }
 
