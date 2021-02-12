@@ -9,6 +9,7 @@ const Candidate = function(candidate) {
     this.address= candidate.address;
     this.postcode= candidate.postcode;
     this.city= candidate.city;
+    this.avatar_path = candidate.avatar_path;
   };
   
   Candidate.create = (newCandidate, result) => {

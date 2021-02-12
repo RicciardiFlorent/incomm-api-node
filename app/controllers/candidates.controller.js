@@ -17,7 +17,8 @@ exports.create = (req, res) => {
       phone: req.body.phone,
       address: req.body.address,
       postcode: req.body.postcode,
-      city: req.body.postcode
+      city: req.body.city,
+      avatar_path : req.body.avatar_path
     });
   
     // Save Candidate in the database
@@ -59,6 +60,7 @@ exports.findOne = (req, res) => {
       } else res.send(data);
     });
   };
+  
 
   // Find a single Candidate with a candidateId
 exports.findOneByName = (req, res) => {

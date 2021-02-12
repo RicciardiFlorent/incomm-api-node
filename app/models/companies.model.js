@@ -9,7 +9,7 @@ const Companie = function(companie) {
     this.referent_phone= companie.referent_phone;
     this.status= companie.status;
     this.business_sector_id= companie.business_sector_id;
-    this.image= companie.image;
+    this.logo= companie.logo;
   };
   
   Companie.create = (newCompanie, result) => {

@@ -18,7 +18,7 @@ exports.create = (req, res) => {
       referent_phone: req.body.referent_phone,
       status: req.body.status,
       business_sector_id: req.body.business_sector_id,
-      image: req.body.image
+      logo: req.body.logo
     });
   
     // Save Companie in the database
