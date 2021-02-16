@@ -27,7 +27,7 @@ const Companie = function(companie) {
   };
 
   Companie.insertImage = (image, id, result) => {
-    sql.query(`UPDATE companies SET image = "${image}" WHERE company_id = ${id} `, (err, res) => {
+    sql.query(`UPDATE companies SET logo = "${image}" WHERE company_id = ${id} `, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -95,6 +95,25 @@ const Companie = function(companie) {
       result({ kind: "not_found" }, null);
     });
   };
+
+  Companie.getAllEmployee = (idCompany, result) => {
+    sql.query(`SELECT * FROM employees WHERE company_id = "${idCompany}"`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      if (res.length) {
+        console.log("found companie: ", res);
+        result(null, res);
+        return;
+      }
+  
+      // not found Companie with the name
+      result({ kind: "not_found" }, null);
+    });
+  };
   
   Companie.getAll = result => {
     sql.query("SELECT * FROM companies", (err, res) => {
@@ -112,8 +131,8 @@ const Companie = function(companie) {
   
   Companie.updateById = (id, companie, result) => {
     sql.query(
-      "UPDATE companies SET name =?, referent_lastname = ?, referent_firstname = ?, referent_email = ?, referent_phone = ?, status = ?, business_sector_id = ?, image= ? WHERE company_id = ?",
-      [companie.name, companie.referent_lastname, companie.referent_firstname, companie.referent_email, companie.referent_phone, companie.status, companie.business_sector_id, companie.image, id],
+      "UPDATE companies SET name =?, referent_lastname = ?, referent_firstname = ?, referent_email = ?, referent_phone = ?, status = ?, business_sector_id = ?, logo= ? WHERE company_id = ?",
+      [companie.name, companie.referent_lastname, companie.referent_firstname, companie.referent_email, companie.referent_phone, companie.status, companie.business_sector_id, companie.logo, id],
       (err, res) => {
         if (err) {
           console.log("error: ", err);

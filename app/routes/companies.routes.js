@@ -12,6 +12,9 @@ module.exports = app => {
 
     // Retrieve a company with the name
     app.get("/company/name/:companieName", company.findOneByName)
+
+    // Retrieve employees
+    app.get("/company/:companyId/employees", company.getAllEmployee)
   
     // Update a Companie with companyId
     app.put("/company/:companieId", company.update);

@@ -123,8 +123,8 @@ const User = function(user) {
   
   User.updateById = (id, user, result) => {
     sql.query(
-      "UPDATE users SET lastname = ?, firstname = ?, email = ?, password = ?, gender = ?, birthdate =? WHERE user_id = ?",
-      [user.lastname, user.firstname, user.email, user.password, user.gender, user.birthdate, id],
+      "UPDATE users SET lastname = ?, firstname = ?, email = ?, password = ?, gender = ?WHERE user_id = ?",
+      [user.lastname, user.firstname, user.email, user.password, user.gender, id],
       (err, res) => {
         if (err) {
           console.log("error: ", err);

@@ -6,6 +6,8 @@ module.exports = app => {
   
     // Retrieve all Offers
     app.get("/offer", offer.findAll);
+
+    app.get("/offers/company/:company_id", offer.findAllByCompany);
   
     // Retrieve a single Offer with offerId
     app.get("/offer/:offerId", offer.findOne);
