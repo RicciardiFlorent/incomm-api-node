@@ -61,7 +61,7 @@ exports.findOneByEmployeeID = (req, res) => {
   Employee.findByEmployeeId(req.params.employeeId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
-        res.status().send({
+        res.status(404).send({
           message: `Not found Employee with id ${req.params.employeeId}.`
         });
       } else {

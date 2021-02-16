@@ -21,7 +21,7 @@ const Business_Sector = function(business_sectors) {
   };
   
   Business_Sector.findById = (business_sectorsId, result) => {
-    sql.query(`SELECT * FROM business_sectors WHERE business_sectors_id = ${business_sectorsId}`, (err, res) => {
+    sql.query(`SELECT * FROM business_sectors WHERE business_sector_id = ${business_sectorsId}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -56,7 +56,7 @@ const Business_Sector = function(business_sectors) {
   
   Business_Sector.updateById = (id, business_sectors, result) => {
     sql.query(
-      "UPDATE business_sectors SET name = ? WHERE business_sectors_id = ?",
+      "UPDATE business_sectors SET name = ? WHERE business_sector_id = ?",
       [business_sectors.name, id],
       (err, res) => {
         if (err) {
@@ -78,7 +78,7 @@ const Business_Sector = function(business_sectors) {
   };
   
   Business_Sector.remove = (id, result) => {
-    sql.query("DELETE FROM business_sectors WHERE business_sectors_id = ?", id, (err, res) => {
+    sql.query("DELETE FROM business_sectors WHERE business_sector_id = ?", id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -91,7 +91,7 @@ const Business_Sector = function(business_sectors) {
         return;
       }
   
-      console.log("deleted business_sectors with business_sectors_id: ", id);
+      console.log("deleted business_sectors with business_sector_id: ", id);
       result(null, res);
     });
   };
