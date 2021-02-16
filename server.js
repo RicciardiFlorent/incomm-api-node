@@ -20,7 +20,6 @@ require("./app/routes/cv.routes.js")(app);
 require("./app/routes/media.routes.js")(app);
 require("./app/routes/offer_sectors.routes.js")(app);
 require("./app/routes/business_sectors.routes.js")(app);
-require("./app/routes/current_situations.routes.js")(app);
 require("./app/routes/candidate_offer.routes.js")(app);
 require("./app/routes/posts.routes.js")(app);
 require("./app/routes/offers.routes.js")(app);
