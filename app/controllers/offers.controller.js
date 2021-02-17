@@ -61,6 +61,24 @@ exports.findAll = (req, res) => {
     });
   }
 
+  // Find a single Offer with a offerId
+exports.findAllByCompany = (req, res) => {
+  Offer.getAllByCompany(req.params.company_id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status.send({
+          message: `Not found Offer with company_id ${req.params.company_id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Offer with company_id " + req.params.company_id
+        });
+      }
+    } else res.send(data);
+  });
+};
+
+
 // Find a single Offer with a offerId
 exports.findOne = (req, res) => {
     Offer.findById(req.params.offerId, (err, data) => {

@@ -64,6 +64,20 @@ const Offer = function(offer) {
     });
   };
 
+  Offer.getAllByCompany = (id,result) => {
+    sql.query("SELECT * FROM offers WHERE company_id = ?", id,(err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      console.log("offers: ", res);
+      result(null, res);
+    });
+  };
+
+
   Offer.getNbOffers = result => {
     sql.query("SELECT company_id, count(offer_id) as nbOffers from offers group by company_id", (err, res) => {
       if (err) {

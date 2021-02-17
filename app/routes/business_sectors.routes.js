@@ -8,7 +8,7 @@ module.exports = app => {
     app.get("/business_sector", business_sector.findAll);
   
     // Retrieve a single Business_Sector with business_sectorId
-    app.get("/business_sector/:business_sectorId", business_sector.findOne);
+    app.get("/business_sector/:business_sectorsId", business_sector.findOne);
   
     // Update a Business_Sector with business_sectorId
     app.put("/business_sector/:business_sectorId", business_sector.update);

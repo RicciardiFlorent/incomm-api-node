@@ -39,6 +39,25 @@ const Employee = function(employee) {
       result({ kind: "not_found" }, null);
     });
   };
+
+  Employee.findByEmployeeId = (employeeId, result) => {
+    sql.query(`SELECT * FROM users INNER JOIN employees ON users.user_id = employees.user_id AND employees.employee_id = ${employeeId} `, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      if (res.length) {
+        console.log("found employee: ", res[0]);
+        result(null, res[0]);
+        return;
+      }
+  
+      // not found Employee with the id
+      result({ kind: "not_found" }, null);
+    });
+  };
   
   
   Employee.getAll = result => {
@@ -79,7 +98,7 @@ const Employee = function(employee) {
   };
   
   Employee.remove = (id, result) => {
-    sql.query("DELETE FROM employees WHERE employee_id = ?", id, (err, res) => {
+    sql.query("DELETE users, employees FROM users INNER JOIN employees ON users.user_id = employees.user_id and users.user_id = ?", id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -92,10 +111,12 @@ const Employee = function(employee) {
         return;
       }
   
-      console.log("deleted employee with employee_id: ", id);
+      console.log("deleted employee with user_id: ", id);
       result(null, res);
     });
   };
+
+  
   
   Employee.removeAll = result => {
     sql.query("DELETE FROM employees", (err, res) => {

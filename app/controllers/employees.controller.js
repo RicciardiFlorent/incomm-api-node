@@ -57,6 +57,22 @@ exports.findOne = (req, res) => {
   };
 
   // Find a single Employee with a employeeId
+exports.findOneByEmployeeID = (req, res) => {
+  Employee.findByEmployeeId(req.params.employeeId, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Employee with id ${req.params.employeeId}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Employee with id " + req.params.employeeId
+        });
+      }
+    } else res.send(data);
+  });
+};
+  // Find a single Employee with a employeeId
 exports.findOneByName = (req, res) => {
     Employee.findByName(req.params.employeeName, (err, data) => {
       if (err) {
