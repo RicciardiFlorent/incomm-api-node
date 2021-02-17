@@ -58,6 +58,25 @@ const Companie = function(companie) {
     });
   };
 
+  Companie.findByEmployeeId = (employeeId, result) => {
+    sql.query(`SELECT * FROM companies JOIN employees ON employees.company_id = companies.company_id WHERE employee_id = ${employeeId}`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      if (res.length) {
+        console.log("found company: ", res[0]);
+        result(null, res[0]);
+        return;
+      }
+  
+      // not found Companie with the id
+      result({ kind: "not_found" }, null);
+    });
+  };
+
   Companie.getImageByID = (id, result) =>{
     sql.query(`SELECT image FROM companies WHERE company_id = "${id}"`, (err, res) => {
       if (err) {

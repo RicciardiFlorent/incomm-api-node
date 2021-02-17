@@ -18,6 +18,9 @@ module.exports = app => {
   
     // Delete a Companie with companyId
     app.delete("/company/:companieId", company.delete);
+
+    //get company by id employee
+    app.get("/company/companyByEmployee/:employeeId", company.findByEmployeeId)
   
     // Create a new Companie
     app.delete("/company", company.deleteAll);
