@@ -61,6 +61,38 @@ exports.findOne = (req, res) => {
     });
   };
 
+exports.findByEmployeeId = (req, res) => {
+  Companie.findByEmployeeId(req.params.employeeId, (err, data)=> {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Companie with id ${req.params.employeeId}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Companie with id " + req.params.employeeId
+        });
+      }
+    } else res.send(data);
+  })
+}
+
+exports.findByUserId = (req, res) => {
+  Companie.findByUserId(req.params.userId, (err, data)=> {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Companie with id ${req.params.userId}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Companie with id " + req.params.userId
+        });
+      }
+    } else res.send(data);
+  })
+}
+
   // Find a single Companie with a companyName
 exports.findOneByName = (req, res) => {
     Companie.findByName(req.params.companieName, (err, data) => {
@@ -166,6 +198,8 @@ exports.update = (req, res) => {
       }
     );
   };
+
+
 // Delete a Companie with the specified companieId in the request
 exports.delete = (req, res) => {
     Companie.remove(req.params.companieId, (err, data) => {
@@ -182,6 +216,8 @@ exports.delete = (req, res) => {
       } else res.send({ message: `Companie was deleted successfully!` });
     });
   };
+
+
 // Delete all Companies from the database.
 exports.deleteAll = (req, res) => {
     Companie.removeAll((err, data) => {
