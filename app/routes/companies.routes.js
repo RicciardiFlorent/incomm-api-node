@@ -24,12 +24,16 @@ module.exports = app => {
 
     //get company by id employee
     app.get("/company/companyByEmployee/:employeeId", company.findByEmployeeId)
-  
+
+    //get company from user id
+    app.get("/company/companyByUser/:userId", company.findByUserId);
+
     // Create a new Companie
     app.delete("/company", company.deleteAll);
 
     app.post("/company/:companieId/img", company.updateImage);
 
     app.get("/company/:companieId/img", company.getImageByID)
+    
 
   };
