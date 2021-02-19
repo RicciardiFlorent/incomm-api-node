@@ -2,6 +2,9 @@ const sql = require("./db.js");
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
+var bcrypt = require ('bcrypt');
+
+
 
 // constructor
 const User = function(user) {
@@ -12,22 +15,22 @@ const User = function(user) {
     this.gender= user.gender;
     this.birthdate= user.birthdate;
   };
-  
+
+
   User.create = (newUser, result) => {
-    console.log(newUser)
     sql.query("INSERT INTO users SET ?", newUser, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
         return;
       }
-  
       console.log("created user: ", { user_id: res.insertId, ...newUser });
       result(null, { id: res.insertId, ...newUser });
     });
   };
-  
-  User.checkCredential = (email, password, result) => {
+
+
+  User.checkCredential = async(email, password, result) => {
     console.log(password)
     sql.query(`SELECT * FROM users WHERE email = '${email}'`, (err, res) => {
       if (err) {
@@ -35,34 +38,40 @@ const User = function(user) {
         result(err, null);
         return;
       }
-  
-      /**
-       *  if (!bcrypt.compareSync(req.body.password, user.password)) {
-            return res.status(401).send({ auth: false, token: null });
-          }
-       */
 
       if (res.length) {
         console.log("found user: ", res[0]);
         user = res[0]
-        if(user.password != password){
-          console.log(res[0].password +" "+ password)
-          result(null, {auth: false, token: null })
-          return
-        }
-        var token = jwt.sign({ ID: user.id, }, 'secret', { expiresIn: '2h' });
-        const userInfo = {
-          auth: true,
-          status: "OK",
-          token: token,
-          expiresIn: 60 * 60 * 24 * 365,
-          user: user
-        }
-        result(null, userInfo);
-        return;
+        console.log(user.password)
+        console.log(password)
+        bcrypt.compare(password, user.password)
+            .then(isValid => {
+              console.log(isValid)
+              if(!isValid){
+                console.log(res[0].password +" "+ password)
+                result(null, {auth: false, token: null })
+                return
+              }
+              else{
+                console.log(user)
+                var token = jwt.sign({ ID: user.id, }, 'secret', { expiresIn: '2h' });
+                const userInfo = {
+                  auth: true,
+                  status: "OK",
+                  token: token,
+                  expiresIn: 60 * 60 * 24 * 365,
+                  user: user
+                }
+                result(null, userInfo);
+                return
+              }
+            })
+            .catch((e)=> {
+              console.log(e)
+              result({ kind: "not_found" }, null);
+              return
+            })
       }
-      // not found User with the id
-      result({ kind: "not_found" }, null);
     });
   };
 
