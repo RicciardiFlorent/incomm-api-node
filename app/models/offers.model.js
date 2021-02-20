@@ -92,8 +92,8 @@ const Offer = function(offer) {
   
   Offer.updateById = (id, offer, result) => {
     sql.query(
-      "UPDATE offers SET contract_id = ?, employee_id = ?, posted_at = ?, content = ?, title = ?, fast_apply = ?, url = ?, salary = ?, city = ?, department = ?, start_date=?, end_date = ?, offer_sector_id = ? WHERE offer_id = ?",
-      [  offer.employee_id,offer.posted_at,offer.content,offer.title,offer.fast_apply,offer.url,offer.salary,offer.city,offer.department,offer.start_date,offer.end_date,offer.offer_sector_id,offer.company_id, id],
+      "UPDATE offers SET contract_id = ?, employee_id = ?, content = ?, title = ?, fast_apply = ?, url = ?, salary = ?, city = ?, department = ?, start_date=?, end_date = ?, offer_sector_id = ? WHERE offer_id = ?",
+      [  offer.contract_id,offer.employee_id,offer.content,offer.title,offer.fast_apply,offer.url,offer.salary,offer.city,offer.department,offer.start_date,offer.end_date,offer.offer_sector_id, id],
       (err, res) => {
         if (err) {
           console.log("error: ", err);
