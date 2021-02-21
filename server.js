@@ -30,6 +30,7 @@ require("./app/routes/employees.routes.js")(app);
 require("./app/routes/comments.routes.js")(app);
 require("./app/routes/likes_post.routes.js")(app);
 require("./app/routes/likes_offer.routes.js")(app);
+require("./app/routes/apply_offer.routes.js")(app);
 
 //set port, listen for requests
 app.listen(3000, () => {

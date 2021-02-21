@@ -38,6 +38,27 @@ const Like = function(like) {
       result({ kind: "not_found" }, null);
     });
   };
+
+  
+  Like.findOfferByUserId = ( userID , result) => {
+    sql.query(`SELECT * FROM likes_offer WHERE user_id=${userID}`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      if (res.length) {
+        console.log("found like: ", res);
+        result(null, res);
+        return;
+      }
+  
+      // not found Like with the id
+      result({ kind: "not_found" }, null);
+    });
+  };
+  
   
   Like.findByOfferId = (offerID, result) => {
     sql.query(`SELECT * FROM likes_offer WHERE offer_id = ${offerID}`, (err, res) => {
@@ -57,6 +78,26 @@ const Like = function(like) {
       result({ kind: "not_found" }, "tsrs");
     });
   };
+
+
+  Like.findByOfferIdAndUserId = (offerID, userID , result) => {
+    sql.query(`SELECT * FROM likes_offer WHERE offer_id = ${offerID} and user_id=${userID}`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      if (res.length) {
+        console.log("found like: ", res[0]);
+        result(null, res[0]);
+        return;
+      }
+  
+      // not found Like with the id
+      result({ kind: "not_found" }, null);
+    });
+  };
   
   Like.getAll = result => {
     sql.query("SELECT * FROM likes_offer", (err, res) => {
@@ -74,6 +115,19 @@ const Like = function(like) {
     
   Like.getAllByUserID = (userID, result) => {
     sql.query("SELECT * FROM likes_offer WHERE user_id= ?", userID, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+  
+      console.log("likes: ", res);
+      result(null, res);
+    });
+  };
+
+  Like.getAllByUserIDAndOfferID = (userID, offerID, result) => {
+    sql.query("SELECT * FROM likes_offer WHERE user_id= '?' and offer_id = '?'", userID,offerID, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

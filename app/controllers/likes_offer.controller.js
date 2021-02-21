@@ -75,20 +75,37 @@ exports.findAllByOfferId = (req, res) => {
 
   // Find a single Like with a likeId
   exports.findAllByUserId = (req, res) => {
-    Like.getAllByUserID(req.params.user_id, (err, data) => {
+    Like.findOfferByUserId(req.params.user_id, (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
-          res.send([]);
+          res.status(200).send([]);
         } else {
           res.status(500).send({
-            message: "Error retrieving Like with user_id " + req.params.user_id
+            message: "Error retrieving Like with id " + req.params.user_id
           });
         }
       } else res.send(data);
     });
   };
 
+    // Find a single Like with a likeId
+    exports.findAllByUserIdAndOfferId = (req, res) => {
+      Like.findByOfferIdAndUserId(req.params.offer_id,req.params.user_id, (err, data) => {
+        if (err) {
+          if (err.kind === "not_found") {
+            res.status(200).send([]);
+          } else {
+            res.status(500).send({
+              message: "Error retrieving Like with id " + req.params.offer_id
+            });
+          }
+        } else res.send(data);
+      });
+    };
 
+
+
+    
 // Delete a Like with the specified likeId in the request
 exports.delete = (req, res) => {
     Like.remove(req.params.offer_id, req.params.user_id, (err, data) => {
