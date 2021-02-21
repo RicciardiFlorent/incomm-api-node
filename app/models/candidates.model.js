@@ -61,10 +61,10 @@ const Candidate = function(candidate) {
   
   
   Candidate.updateById = (id, candidate, result) => {
+    console.log(id, candidate, result);
     sql.query(
-      "UPDATE candidates SET current_situation_id = ?, cv_id = ?, candidate_id = ?, phone = ?, address = ?, postcode =?, city = ? WHERE candidate_id = ?",
-      [candidate.lastname, candidate.current_situation_id, candidate.cv_id, candidate.candidate_id, candidate.phone, candidate.address, candidate.postcode, candidate.city, id],
-      (err, res) => {
+      "UPDATE candidates SET current_situation_id = ?, cv_id = ?, phone = ?, address = ?, postcode =?, city = ? WHERE candidate_id = ?",
+      [candidate.current_situation_id, candidate.cv_id, candidate.phone, candidate.address, candidate.postcode, candidate.city, id],      (err, res) => {
         if (err) {
           console.log("error: ", err);
           result(null, err);

@@ -88,6 +88,9 @@ exports.update = (req, res) => {
         message: "Content can not be empty!"
       });
     }
+
+    console.log("E+REQUET:", req.body)
+    console.log("E+REQUET PARAMS:", req.params)
   
     Candidate.updateById(
       req.params.candidateId,

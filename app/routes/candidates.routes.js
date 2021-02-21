@@ -12,7 +12,7 @@ module.exports = app => {
 
     app.get("/candidate/name/:candidateName", candidate.findOneByName)
   
-    // Update a Candidate with candidateId
+    // Update a Candidate with userid
     app.put("/candidate/:candidateId", candidate.update);
   
     // Delete a Candidate with candidateId
