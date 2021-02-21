@@ -106,40 +106,24 @@ exports.update = (req, res) => {
         message: "Content can not be empty!"
       });
     }
-    bcrypt.hash(req.body.password, 10)
-        .then((pass)=>{
-            const user = new User({
-                lastname: req.body.lastname,
-                firstname: req.body.firstname,
-                email: req.body.email,
-                password: pass,
-                gender: req.body.gender,
-                birthdate: req.body.birthdate
+  
+    User.updateById(
+      req.params.userId,
+      new User(req.body),
+      (err, data) => {
+        if (err) {
+          if (err.kind === "not_found") {
+            res.status(404).send({
+              message: `Not found User with id ${req.params.userId}.`
             });
-            User.updateById(
-                req.params.userId,
-                new User(user),
-                (err, data) => {
-                    if (err) {
-                        if (err.kind === "not_found") {
-                            res.status(404).send({
-                                message: `Not found User with id ${req.params.userId}.`
-                            });
-                        } else {
-                            res.status(500).send({
-                                message: "Error updating User with id " + req.params.userId
-                            });
-                        }
-                    } else res.send(data);
-                }
-            );
-        })
-        .catch((e)=>{
+          } else {
             res.status(500).send({
-                message:
-                    e || "Some error occurred while creating the User."
+              message: "Error updating User with id " + req.params.userId
             });
-        })
+          }
+        } else res.send(data);
+      }
+    );
   };
 // Delete a User with the specified userId in the request
 exports.delete = (req, res) => {
