@@ -1,5 +1,4 @@
 const User = require("../models/users.model.js");
-var bcrypt = require ('bcrypt');
 
 // Create and Save a new User
 exports.create = (req, res) => {
@@ -9,37 +8,30 @@ exports.create = (req, res) => {
         message: "Content can not be empty!"
       });
     }
+  
     // Create a User
-    bcrypt.hash(req.body.password, 10)
-        .then((pass)=>{
-            const user = new User({
-                lastname: req.body.lastname,
-                firstname: req.body.firstname,
-                email: req.body.email,
-                password: pass,
-                gender: req.body.gender,
-                birthdate: req.body.birthdate
-            });
-            // Save User in the database
-            User.create(user, (err, data) => {
-                if (err)
-                    res.status(500).send({
-                        message:
-                            err.message || "Some error occurred while creating the User."
-                    });
-                else res.send(data);
-            });
-        })
-        .catch((e)=>{
-            res.status(500).send({
-                message:
-                    e || "Some error occurred while creating the User."
-            });
-        })
+    const user = new User({
+      lastname: req.body.lastname,
+      firstname: req.body.firstname,
+      email: req.body.email,
+      password: req.body.password,
+      gender: req.body.gender,
+      birthdate: req.body.birthdate
+    });
+  
+    // Save User in the database
+    User.create(user, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the User."
+        });
+      else res.send(data);
+    });
   };
 
 // login user
-exports.login = async(req, res) => {
+exports.login = (req, res) => {
   console.log(req.body)
   // Validate request
   if (!req.body) {
@@ -47,14 +39,15 @@ exports.login = async(req, res) => {
       message: "Content can not be empty!"
     });
   }
-    await User.checkCredential(req.body.email, req.body.password, (err,data) => {
-        if (err)
-            res.status(500).send({
-                message:
-                    err.message || "Some error with the credentials"
-            });
-        else res.send(data);
-    });
+
+  User.checkCredential(req.body.email, req.body.password, (err,data) => {
+    if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error with the credentials"
+        });
+      else res.send(data);
+  });
 };
 
 

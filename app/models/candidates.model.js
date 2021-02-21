@@ -10,7 +10,6 @@ const Candidate = function(candidate) {
     this.postcode= candidate.postcode;
     this.city= candidate.city;
     this.avatar_path = candidate.avatar_path;
-    this.candidate_id = candidate.candidate_id;
   };
   
   Candidate.create = (newCandidate, result) => {
@@ -64,7 +63,7 @@ const Candidate = function(candidate) {
   Candidate.updateById = (id, candidate, result) => {
     sql.query(
       "UPDATE candidates SET current_situation_id = ?, cv_id = ?, candidate_id = ?, phone = ?, address = ?, postcode =?, city = ? WHERE candidate_id = ?",
-      [candidate.current_situation_id, candidate.cv_id, candidate.candidate_id, candidate.phone, candidate.address, candidate.postcode, candidate.city, id],
+      [candidate.lastname, candidate.current_situation_id, candidate.cv_id, candidate.candidate_id, candidate.phone, candidate.address, candidate.postcode, candidate.city, id],
       (err, res) => {
         if (err) {
           console.log("error: ", err);
