@@ -45,15 +45,13 @@ exports.findAll = (req, res) => {
 
   // Retrieve all Apply_Offers from the database.
 exports.findByUserIDandOfferID = (req, res) => {
-  Apply_Offer.getByOfferIDandUserID((req.params.offer_id, req.params.user_id),(err, data) => {
+  Apply_Offer.findByUserIDandOfferID(req.params.user_id, req.params.offer_id,(err, data) => {
     if (err) {
       if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `Not found Apply_Offer with id ${req.params.offer_id}.`
-        });
+        res.status(200).send([]);
       } else {
         res.status(500).send({
-          message: "Error retrieving Apply_Offer with id " + req.params.offer_id
+          message: "Error retrieving Apply_Offer with id " + req.params.user_id
         });
       }
     } else res.send(data);

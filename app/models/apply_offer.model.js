@@ -58,9 +58,8 @@ const Apply_Offer = function(apply_offer) {
     });
   };
 
-  Apply_Offer.getByOfferIDandUserID = (offer_id, user_id, result) => {
-
-    sql.query(`SELECT * FROM apply_offer WHERE offer_id= ${offer_id} AND user_id= ${user_id}`, (err, res) => {
+  Apply_Offer.findByUserIDandOfferID = (user_id, offer_id, result) => {
+    sql.query(`SELECT * FROM apply_offer WHERE user_id = '${user_id}' AND offer_id='${offer_id}'`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -68,15 +67,16 @@ const Apply_Offer = function(apply_offer) {
       }
   
       if (res.length) {
-        console.log("found candidate: ", res[0]);
+        console.log("found user: ", res[0]);
         result(null, res[0]);
         return;
       }
   
-      // not found Candidate with the id
+      // not found User with the email
       result({ kind: "not_found" }, null);
     });
   };
+  
   
   
 
