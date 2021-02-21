@@ -82,6 +82,29 @@ const Candidate = function(candidate) {
       }
     );
   };
+
+  Candidate.updateCvById = (id, candidate, result) => {
+    console.log(id, candidate, result);
+    sql.query(
+      "UPDATE candidates SET cv_id = ? WHERE candidate_id = ?",
+      [candidate.cv_id, id],      (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(null, err);
+          return;
+        }
+  
+        if (res.affectedRows == 0) {
+          // not found Candidate with the id
+          result({ kind: "not_found" }, null);
+          return;
+        }
+  
+        console.log("updated candidate: ", { candidate_id: id, ...candidate });
+        result(null, { candidate_id: id, ...candidate });
+      }
+    );
+  };
   
   Candidate.remove = (id, result) => {
     sql.query("DELETE FROM candidates WHERE candidate_id = ?", id, (err, res) => {
