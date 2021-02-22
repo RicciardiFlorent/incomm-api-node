@@ -76,6 +76,25 @@ const Apply_Offer = function(apply_offer) {
       result({ kind: "not_found" }, null);
     });
   };
+
+  Apply_Offer.findByCompanyID = (company_id, result) => {
+    sql.query(`SELECT * FROM apply_offer WHERE company_id = '${company_id}'`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      if (res.length) {
+        console.log("found companyID: ", res);
+        result(null, res);
+        return;
+      }
+  
+      // not found User with the email
+      result({ kind: "not_found" }, null);
+    });
+  };
   
   
   

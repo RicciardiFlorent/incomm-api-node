@@ -58,6 +58,22 @@ exports.findByUserIDandOfferID = (req, res) => {
   });
 };
 
+  // Retrieve all Apply_Offers from the database.
+  exports.findByCompanyID = (req, res) => {
+    Apply_Offer.findByCompanyID(req.params.company_id,(err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(200).send([]);
+        } else {
+          res.status(500).send({
+            message: "Error retrieving Apply_Offer with id " + req.params.company_id
+          });
+        }
+      } else res.send(data);
+    });
+  };
+
+  
 // Find a single Apply_Offer with a apply_offerId
 exports.findOne = (req, res) => {
     Apply_Offer.findById(req.params.apply_offer_id, (err, data) => {
