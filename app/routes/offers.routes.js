@@ -21,5 +21,7 @@ module.exports = app => {
     // Create a new Offer
     app.delete("/offer", offer.deleteAll);
 
-    app.get("/nbOffers", offer.getNbOffers)
+    app.get("/nbOffers", offer.getNbOffers);
+
+    app.get("/offer-liked/:UserId", offer.findByUserIdLike);
   };

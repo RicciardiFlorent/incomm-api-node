@@ -168,3 +168,20 @@ exports.deleteAll = (req, res) => {
       else res.send({ message: `All Offers were deleted successfully!` });
     });
   };
+
+
+  exports.findByUserIdLike = (req, res) => {
+    Offer.findByUserIdLike(req.params.UserId, (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            message: `Not found Offer with id ${req.params.UserId}.`
+          });
+        } else {
+          res.status(500).send({
+            message: "Error retrieving Offer with id " + req.params.UserId
+          });
+        }
+      } else res.send(data);
+    });
+  };

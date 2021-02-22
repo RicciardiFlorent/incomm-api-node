@@ -50,6 +50,24 @@ const Offer = function(offer) {
     });
   };
   
+  Offer.findByUserIdLike = (UserId, result) => {
+    sql.query(`SELECT * FROM offers JOIN likes_offer ON offers.offer_id = likes_offer.offer_id WHERE likes_offer.user_id = ${UserId}`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      if (res.length) {
+        console.log("found offer: ", res);
+        result(null, res);
+        return;
+      }
+  
+      // not found Offer with the id
+      result({ kind: "not_found" }, null);
+    });
+  };
   
   Offer.getAll = result => {
     sql.query("SELECT * FROM offers", (err, res) => {
