@@ -35,5 +35,6 @@ module.exports = app => {
 
     app.get("/company/:companieId/img", company.getImageByID)
     
+    app.get("/company-random", company.getRandom)
 
   };

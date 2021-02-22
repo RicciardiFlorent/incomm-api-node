@@ -126,6 +126,19 @@ exports.findOneByName = (req, res) => {
     });
   };
 
+
+// Retrieve all Companies from the database.
+exports.getRandom = (req, res) => {
+  Companie.getRandom((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving companies."
+      });
+    else res.send(data);
+  });
+};
+
   // Find a single Companie with a companyName
   exports.getImageByID = (req, res) => {
     Companie.getImageByID(req.params.companieId, (err, data) => {

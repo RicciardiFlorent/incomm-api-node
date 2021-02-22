@@ -1,5 +1,4 @@
 const sql = require("./db.js");
-
 // constructor
 const Companie = function(companie) {
     this.name= companie.name;
@@ -165,7 +164,20 @@ const Companie = function(companie) {
       result(null, res);
     });
   };
+
+  Companie.getRandom = result => {
+    sql.query(`  SELECT * FROM companies ORDER BY RAND() LIMIT 3`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
   
+      console.log("companies: ", res);
+      result(null, res);
+    });
+  };
+
   
   Companie.updateById = (id, companie, result) => {
     sql.query(
