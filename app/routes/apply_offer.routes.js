@@ -7,8 +7,10 @@ module.exports = app => {
     // Retrieve all Candidates
     app.get("/apply_offer", apply_offer.findAll);
 
-      // Retrieve all Candidates
-      app.get("/apply_offer/:user_id/:offer_id", apply_offer.findByUserIDandOfferID);
+    app.get("/apply_offer/company/:company_id", apply_offer.findByCompanyID);
+    
+    // Retrieve all Candidates
+    app.get("/apply_offer/:user_id/:offer_id", apply_offer.findByUserIDandOfferID);
   
   
     // Delete a Candidate with apply_offerId
