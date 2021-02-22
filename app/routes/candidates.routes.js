@@ -10,6 +10,8 @@ module.exports = app => {
   // Retrieve a single Candidate with candidateId
   app.get("/candidate/:candidateId", candidate.findOne);
 
+  app.get("/candidate-user/:user_id", candidate.findByuserId);
+
   app.get("/candidate/name/:candidateName", candidate.findOneByName)
 
   // Update a Candidate with userid

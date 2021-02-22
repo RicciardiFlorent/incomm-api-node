@@ -68,7 +68,7 @@ const Offer = function(offer) {
       result({ kind: "not_found" }, null);
     });
   };
-  
+
   Offer.getAll = result => {
     sql.query("SELECT * FROM offers", (err, res) => {
       if (err) {

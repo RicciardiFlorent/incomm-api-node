@@ -61,6 +61,22 @@ exports.findOne = (req, res) => {
   });
 };
 
+exports.findByuserId = (req, res) => {
+  Candidate.findByuserId(req.params.user_id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Not found Candidate with id ${req.params.user_id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Candidate with id " + req.params.user_id
+        });
+      }
+    } else res.send(data);
+  });
+};
+
 
 // Find a single Candidate with a candidateId
 exports.findOneByName = (req, res) => {

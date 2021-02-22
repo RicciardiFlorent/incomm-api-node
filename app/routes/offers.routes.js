@@ -24,4 +24,6 @@ module.exports = app => {
     app.get("/nbOffers", offer.getNbOffers);
 
     app.get("/offer-liked/:UserId", offer.findByUserIdLike);
+
+    
   };

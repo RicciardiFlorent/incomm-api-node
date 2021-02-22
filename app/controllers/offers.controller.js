@@ -185,3 +185,5 @@ exports.deleteAll = (req, res) => {
       } else res.send(data);
     });
   };
+
+  
